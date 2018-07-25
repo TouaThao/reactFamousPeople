@@ -3,41 +3,61 @@ import logo from './logo.svg';
 
 class Header extends Component {
 
-    constructor(people) {
-        super(people)
+    constructor(props) {
+        super(props)
         this.state = {
             star: {
                 name: '',
                 role: '',
+                popularity: ''
             }
         }
     }
 
-    handleStarName = (event) => {
-        
-        this.setState({
-            star: {
-                ...this.state.star,
-                name: event.target.value
-            }
-        })
-    }
-    handleStarRole = (event) => {
-        this.setState({
-            star: {
-                ...this.state.star,
-                role: event.target.value
-            }
-        })
+    handleAll = (propertyName) =>{
+        return(event)=>{
+            this.setState({
+                star:{
+                    ...this.state.star,
+                    [propertyName] : event.target.value
+                }
+            })
+        }
     }
 
-    clickHandle = () => {
+    // handleStarName = (event) => {
+        
+    //     this.setState({
+    //         star: {
+    //             ...this.state.star,
+    //             name: event.target.value
+    //         }
+    //     })
+    // }
+    // handleStarRole = (event) => {
+    //     this.setState({
+    //         star: {
+    //             ...this.state.star,
+    //             role: event.target.value
+    //         }
+    //     })
+    // }
+
+    clickHandle = (event) => {
         console.log(this.state)
+        event.preventDefault();
+        this.setState({
+            star:{
+                name: '',
+                role: '',
+                popularity: ''
+            }
+        })
     }
 
 
     render() {
-
+    
 
         return (
             <div>
@@ -45,10 +65,14 @@ class Header extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
-                <p>My Name {this.state.star.name}, I'm Famous for {this.state.star.role}</p>
-                <input type="text" onChange={this.handleStarName} />
-                <input type="text" onChange={this.handleStarRole} />
-                <button onClick={this.clickHandle}>click</button>
+                <p>My Name {this.state.star.name}, I'm Famous for {this.state.star.role}
+                        . I have a {this.state.star.popularity} rating </p>
+                <form onSubmit={this.clickHandle}>
+                <input value={this.state.star.name} type="text" onChange={this.handleAll('name')} />
+                <input value={this.state.star.role} type="text" onChange={this.handleAll('role')} />
+                <input value={this.state.star.popularity}  type="number" onChange={this.handleAll('popularity')} />
+                <input value="Click" type="submit"/>
+                </form>
             </div>
         )
 
